@@ -12,7 +12,7 @@ def get_value(d, key, default=None):
 
     Hint: Use d.get(key, default) — Python dictionaries have this built in!
     """
-    pass
+    return d.get(key, default)
 
 
 def add_or_update(d, key, value):
@@ -27,7 +27,8 @@ def add_or_update(d, key, value):
 
     Hint: d[key] = value   sets or updates a key in a dictionary.
     """
-    pass
+    d[key] = value
+    return d
 
 
 def remove_key(d, key):
@@ -47,7 +48,9 @@ def remove_key(d, key):
             del d[key]
         return d
     """
-    pass
+    if key in d:
+        del d[key]
+    return d
 
 
 def merge_dicts(d1, d2):
@@ -72,7 +75,9 @@ def merge_dicts(d1, d2):
         result.update(d2)    # add/overwrite with d2's values
         return result
     """
-    pass
+    result = d1.copy()
+    result.update(d2)
+    return result
 
 
 def invert_dict(d):
@@ -94,7 +99,7 @@ def invert_dict(d):
     Hint: Use a dict comprehension:
           {v: k for k, v in d.items()}
     """
-    pass
+    return {v: k for k, v in d.items()}
 
 
 def get_all_keys(d):
@@ -114,4 +119,4 @@ def get_all_keys(d):
 
     Hint: sorted(d.keys()) or sorted(d)
     """
-    pass
+    return sorted(d)
