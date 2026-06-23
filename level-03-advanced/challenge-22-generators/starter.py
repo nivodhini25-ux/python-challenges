@@ -15,8 +15,8 @@ def count_up(start, end):
     This is a GENERATOR FUNCTION because it uses yield.
     It does NOT return a list — it generates values one at a time.
     """
-    pass
-
+    for i in range(start, end + 1):
+        yield i     
 
 def fibonacci_generator():
     """
@@ -39,7 +39,10 @@ def fibonacci_generator():
             yield a      ← yield current value
             a, b = b, a + b  ← update to next fibonacci numbers
     """
-    pass
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
 
 
 def take(generator, n):
@@ -57,8 +60,7 @@ def take(generator, n):
     Hint:
         return [next(generator) for _ in range(n)]
     """
-    pass
-
+    return [next(generator) for _ in range(n)]  
 
 def squares_generator(limit):
     """
@@ -77,4 +79,7 @@ def squares_generator(limit):
             yield i * i
             i += 1
     """
-    pass
+    i = 1
+    while i * i <= limit:
+        yield i * i
+        i += 1
