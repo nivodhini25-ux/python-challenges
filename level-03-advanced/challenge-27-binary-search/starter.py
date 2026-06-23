@@ -30,7 +30,20 @@ def binary_search_iterative(arr, target):
 
         return -1  ← not found
     """
-    pass
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
 
 
 def binary_search_recursive(arr, target, low=0, high=None):
@@ -58,7 +71,20 @@ def binary_search_recursive(arr, target, low=0, high=None):
         if high is None:
             high = len(arr) - 1
     """
-    pass
+    if high is None:
+        high = len(arr) - 1
+
+    if low > high:
+        return -1
+
+    mid = (low + high) // 2
+
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, high)
+    else:
+        return binary_search_recursive(arr, target, low, mid - 1)
 
 
 def find_insert_position(arr, target):
@@ -92,4 +118,16 @@ def find_insert_position(arr, target):
 
         return low  ← insertion point
     """
-    pass
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return low
