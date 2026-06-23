@@ -14,7 +14,7 @@ def apply_to_all(func, items):
 
     Hint: list(map(func, items))
     """
-    pass
+    return list(map(func, items))   
 
 
 def keep_if(func, items):
@@ -30,7 +30,7 @@ def keep_if(func, items):
 
     Hint: list(filter(func, items))
     """
-    pass
+    return list(filter(func, items))
 
 
 def reduce_list(func, items, initial):
@@ -53,7 +53,7 @@ def reduce_list(func, items, initial):
     Hint: from functools import reduce  (already imported at top)
           reduce(func, items, initial)
     """
-    pass
+    return reduce(func, items, initial)
 
 
 def pipeline(value, *funcs):
@@ -74,7 +74,10 @@ def pipeline(value, *funcs):
             result = func(result)
         return result
     """
-    pass
+    result = value
+    for func in funcs:
+        result = func(result)
+    return result
 
 
 def compose(f, g):
@@ -95,4 +98,4 @@ def compose(f, g):
 
     Hint: return lambda x: f(g(x))
     """
-    pass
+    return lambda x: f(g(x))
