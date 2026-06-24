@@ -1,4 +1,5 @@
 from collections import deque
+from tracemalloc import start
 
 
 class Graph:
@@ -39,7 +40,8 @@ class Graph:
         self.add_node(node1)
         self.add_node(node2)
         # TODO: Append node2 to node1's list and node1 to node2's list
-        pass
+        self.adjacency_list[node1].append(node2)
+        self.adjacency_list[node2].append(node1)
 
     def get_neighbors(self, node):
         """
@@ -47,7 +49,7 @@ class Graph:
         Return the list of neighbors for the given node.
         Return [] if node doesn't exist.
         """
-        pass
+        return self.adjacency_list.get(node, [])
 
     def bfs(self, start):
         """
@@ -72,7 +74,19 @@ class Graph:
         """
         if start not in self.adjacency_list:
             return []
-        pass
+        visited = {start}
+        queue = deque([start])
+        result = []
+
+        while queue:
+            node = queue.popleft()
+            result.append(node)
+            for neighbor in self.get_neighbors(node):
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+
+        return result
 
     def dfs(self, start):
         """
@@ -98,7 +112,20 @@ class Graph:
         """
         if start not in self.adjacency_list:
             return []
-        pass
+        visited = set()
+        stack = [start]
+        result = []
+
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                result.append(node)
+                for neighbor in reversed(self.get_neighbors(node)):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
+        return result
 
     def has_path(self, start, end):
         """
@@ -109,7 +136,7 @@ class Graph:
         """
         if start not in self.adjacency_list or end not in self.adjacency_list:
             return False
-        pass
+        return end in self.bfs(start)
 
     def shortest_path(self, start, end):
         """
@@ -141,8 +168,29 @@ class Graph:
 
             return []  ← no path found
         """
+        
         if start not in self.adjacency_list or end not in self.adjacency_list:
             return []
-        if start == end:
-            return [start]
-        pass
+
+        queue = deque([start])
+        parents = {start: None}
+
+        while queue:
+            node = queue.popleft()
+
+            if node == end:
+                path = []
+                while node is not None:
+                    path.append(node)
+                    node = parents[node]
+                return path[::-1]
+
+            for neighbor in self.adjacency_list[node]:
+                if neighbor not in parents:
+                    parents[neighbor] = node
+                    queue.append(neighbor)
+
+        return []
+
+
+
